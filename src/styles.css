@@ -1,5 +1,3 @@
-@import-normalize; /* bring in normalize.css styles */
-
 html {
   box-sizing: border-box;
   width: 100vw;
@@ -206,9 +204,4 @@ img {
 .Button:hover,
 .Button:focus {
   background-color: #303f9f;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
 }
