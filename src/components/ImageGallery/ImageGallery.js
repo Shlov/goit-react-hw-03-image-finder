@@ -1,6 +1,12 @@
+import { ImageGalleryItem } from "components/ImageGalleryItem/ImageGalleryItem"
 
 
 
-<ul class="gallery">
-  <!-- Набір <li> із зображеннями -->
-</ul>
+export const ImageGallery = ({imgs}) => {
+  return (
+    <ul className="gallery">
+      {imgs.map(img => <ImageGalleryItem img={img} />)}
+    </ul>
+  )
+}
+
