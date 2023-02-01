@@ -1,10 +1,11 @@
+import { Item, Image } from "./ImageGalleryItem.styled"
 
 
 export const ImageGalleryItem = ({img}) => {
   return (
-    <li className="Gallery-item">
-      <img src={img.previewURL} alt={img.tags} />
-    </li>
+    <Item>
+      <Image src={img.largeImageURL} alt={img.tags} />
+    </Item>
   )
 }
 

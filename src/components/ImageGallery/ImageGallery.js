@@ -4,6 +4,7 @@ import { ImageGalleryItem } from "components/ImageGalleryItem/ImageGalleryItem"
 import { Loader } from "components/Loader/Loader"
 import { Component } from "react"
 import { fetchImgs } from "js/fetchSearch"
+import { ImageGalleryEl } from './ImageGallery.styled'
 
 
 
@@ -11,29 +12,32 @@ export class ImageGallery extends Component {
   state = {
     imgs: null,
     status: 'idel',
-    page: 2
+    page: 2,
+    error: null
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.tagImg !== this.props.tagImg) {
-      console.log('!==')
-      const KEY = '31737650-012dbd0b1d73fc9a5bf6ca0f4'
-      const page = 1
+      const firstPage = 1
+      this.setState({page: 2})
       this.setState({status: 'pending'})
-      fetchImgs(this.props.tagImg, page)
-      .then(imgs => this.setState({imgs: imgs.hits, status: 'resolved'}))
+      fetchImgs(this.props.tagImg, firstPage)
+      .then(imgs => {
+        if (!imgs.total) {
+          return this.setState({status: 'absent'})
+        }
+        return this.setState({imgs: imgs.hits, status: 'resolved'})})
+      .catch(error => this.setState({error, status: 'rejected'}))
+      // .catch(error => console.log(error))
     }
   }
 
   loadMore = () => {
-    console.log('Load more')
-    this.setState(({page}) => {return {page: page+1}})
+    this.setState(({page}) => {return {page: page+1, status: 'pendingMore'}})
     fetchImgs(this.props.tagImg, this.state.page)
       .then(imgs => this.setState(prevState => {
-        // console.dir(imgs)
         return {imgs: [...prevState.imgs, ...imgs.hits], status: 'resolved'}
-      }
-    ))
+      }))
   }
 
   render () {
@@ -45,12 +49,32 @@ export class ImageGallery extends Component {
     if (this.state.status === 'resolved') {
       return (
         <>
-          <ul className="Gallery">
+          <ImageGalleryEl>
             {this.state.imgs.map(img => <ImageGalleryItem img={img}  key={img.id}/>)}
-          </ul>
+          </ImageGalleryEl>
           <Button onClick={this.loadMore}/>
         </>
       )
+    }
+
+    if (this.state.status === 'pendingMore') {
+      return (
+        <>
+          <ImageGalleryEl>
+            {this.state.imgs.map(img => <ImageGalleryItem img={img}  key={img.id}/>)}
+          </ImageGalleryEl>
+          <Loader />
+        </>
+      )
+    }
+
+    if (this.state.status === 'absent') {
+      return <p>No results found for {this.props.tagImg}.</p>
+    }
+
+    if (this.state.status === 'rejected') {
+      console.dir(this.state.error)
+      return <h3>ERROR</h3>
     }
     
   }

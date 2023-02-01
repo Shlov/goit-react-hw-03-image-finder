@@ -16,7 +16,6 @@ export class Searchbar extends Component {
       return toast.error('Enter a search query')
     }
     this.props.onSubmit(this.state.tagImg)
-    this.setState({tagImg: ''})
   }
 
   render () {
