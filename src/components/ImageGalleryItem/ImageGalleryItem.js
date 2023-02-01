@@ -2,8 +2,8 @@
 
 export const ImageGalleryItem = ({img}) => {
   return (
-    <li className="gallery-item">
-      <img src="" alt="" />
+    <li className="Gallery-item">
+      <img src={img.previewURL} alt={img.tags} />
     </li>
   )
 }

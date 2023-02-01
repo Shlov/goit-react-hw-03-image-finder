@@ -1,16 +1,15 @@
 import { Component } from "react";
 import { Toaster } from "react-hot-toast";
-// import { ImageGallery } from "./ImageGallery/ImageGallery";
-import { Loader } from "./Loader/Loader";
+import { ImageGallery } from "./ImageGallery/ImageGallery";
 import { Searchbar } from "./Searchbar/Searchbar"
 
 export class App extends Component {
   state = {
-    imgs: null
+    tagImg: null
   }
 
   handelFormSubmit = (tagImg) => {
-    console.log(tagImg)
+    this.setState({tagImg: tagImg})
   }
 
   render () {
@@ -19,8 +18,8 @@ export class App extends Component {
       <>
         {/* <Searchbar onSubmit = {onSubmit}/> */}
         <Searchbar onSubmit = {this.handelFormSubmit}/>
-        {/* <ImageGallery /> */}
-        <Loader />
+        <ImageGallery tagImg ={this.state.tagImg}/>
+        
         <Toaster position="bottom-center"/>
       </>
     );
