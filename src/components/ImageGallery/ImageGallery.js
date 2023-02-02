@@ -51,7 +51,10 @@ export class ImageGallery extends Component {
           <ImageGalleryEl>
             {this.state.imgs.map(img => <ImageGalleryItem img={img} onClick={this.props.onOpenModal}  key={img.id}/>)}
           </ImageGalleryEl>
-          <Button onClick={this.loadMore}/>
+          {false 
+            ? <h3>Це всі зображення 🙃</h3> 
+            : <Button onClick={this.loadMore}/>}
+          
         </>
       )
     }
