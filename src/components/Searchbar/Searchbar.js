@@ -1,6 +1,6 @@
 import { Component } from "react";
 import toast from 'react-hot-toast';
-import { Btn, Form, Header, Input, Span } from "./Searchbar.styled";
+import { Btn, Form, Header, Input } from "./Searchbar.styled";
 import {GiBugNet} from 'react-icons/gi'
 
 export class Searchbar extends Component {

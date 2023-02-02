@@ -51,6 +51,7 @@ export const Btn = styled.button`
     display: block;
     width: 40px;
     height: 40px;
+    transform: scaleX(-1)
   }
 `
 
@@ -69,7 +70,7 @@ export const Btn = styled.button`
 export const Input = styled.input`
   display: inline-block;
   width: 100%;
-  font: inherit;
+  /* font: inherit; */
   font-size: 20px;
   border: none;
   outline: none;
