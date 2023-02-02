@@ -1,5 +1,7 @@
 import { Component } from "react";
 import toast from 'react-hot-toast';
+import { Btn, Form, Header, Input, Span } from "./Searchbar.styled";
+import {GiBugNet} from 'react-icons/gi'
 
 export class Searchbar extends Component {
   state = {
@@ -20,21 +22,22 @@ export class Searchbar extends Component {
 
   render () {
     return (
-      <header className="Searchbar">
-        <form className="Form" onSubmit={this.handleSubmit}>
-          <button type="submit" className="Button">
-            <span className="Button-label">Search</span>
-          </button>
-          <input
+      <Header>
+        <Form onSubmit={this.handleSubmit}>
+          <Btn type="submit">
+            {/* <Span> */}
+              <GiBugNet/>
+            {/* </Span> */}
+          </Btn>
+          <Input
             onChange={this.handleTagChange}
-            className="Input"
             type="text"
             // autocomplete="off"
             // autofocus
             placeholder="Search images and photos"
           />
-        </form>
-      </header>
+        </Form>
+      </Header>
     )
   }
 }
