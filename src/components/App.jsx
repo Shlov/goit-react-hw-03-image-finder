@@ -25,13 +25,17 @@ export class App extends Component {
     this.setState({showImg: img})
   }
 
+  closeModal = () => {
+    this.toggleModal()
+  }
+
   render () {
 
     return (
       <>
         <Searchbar onSubmit = {this.handelFormSubmit}/>
         <ImageGallery tagImg ={this.state.tagImg} onOpenModal={this.openModal}/>
-        {this.state.showModal && <Modal img = {this.state.showImg}/>}
+        {this.state.showModal && <Modal img = {this.state.showImg} onClose = {this.closeModal}/>}
         <Toaster position="bottom-center"/>
       </>
     );

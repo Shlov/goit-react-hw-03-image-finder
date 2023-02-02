@@ -28,7 +28,6 @@ export class ImageGallery extends Component {
         }
         return this.setState({imgs: imgs.hits, status: 'resolved'})})
       .catch(error => this.setState({error, status: 'rejected'}))
-      // .catch(error => console.log(error))
     }
   }
 
@@ -50,7 +49,6 @@ export class ImageGallery extends Component {
       return (
         <>
           <ImageGalleryEl>
-            {/* {this.state.imgs.map(img => <ImageGalleryItem img={img} onClick={(img) => this.props.onOpenModal(img)}  key={img.id}/>)} */}
             {this.state.imgs.map(img => <ImageGalleryItem img={img} onClick={this.props.onOpenModal}  key={img.id}/>)}
           </ImageGalleryEl>
           <Button onClick={this.loadMore}/>
