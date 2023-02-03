@@ -7,7 +7,6 @@ import { fetchImgs } from "js/fetchSearch"
 import { ImageGalleryEl } from './ImageGallery.styled'
 
 
-
 export class ImageGallery extends Component {
   state = {
     imgs: null,
