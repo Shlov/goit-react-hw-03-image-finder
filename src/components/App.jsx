@@ -26,8 +26,7 @@ export class App extends Component {
       fetchImgs(this.state.tagImg, this.state.page)
       .then(imgs => this.setState(prevState => {
         if (!imgs.total) {
-          // При відсутності зображень зображень з запиту пошуку
-          return {imgs: [], status: 'absent'} 
+          return {status: 'absent'} 
         }
         if (Math.ceil(imgs.totalHits / 12) === this.state.page) {
           return {imgs: [...prevState.imgs, ...imgs.hits], status: 'end'}
@@ -76,7 +75,7 @@ export class App extends Component {
         {status === 'end' && <Message><h2>Це всі зображення, що знайшли 🙃</h2></Message>}
         {status === 'absent' && <Message><h2>No results found for "{tagImg}".</h2></Message>}
         {status === 'rejected' && <Message><h2>ERROR</h2></Message>}
-        
+
         <Toaster position="bottom-center"/>
       </>
     );
