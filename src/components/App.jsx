@@ -1,50 +1,44 @@
 import { Component } from "react";
 import { Toaster } from "react-hot-toast";
+import toast from 'react-hot-toast';
 import { Loader } from "components/Loader/Loader"
 import { Button } from "components/Button/Button"
 import { ImageGallery } from "./ImageGallery/ImageGallery";
 import { Modal } from "./Modal/Modal";
 import { Searchbar } from "./Searchbar/Searchbar"
 import { fetchImgs } from "js/fetchSearch"
-// import toast from 'react-hot-toast';
+import { Message } from "./Message/Message";
 
 export class App extends Component {
   state = {
     tagImg: null,
-    imgs: null,
-    responseApi: null,
+    imgs: [],
     status: 'idel',
-    page: 2,
+    page: 1,
     error: null,
     showModal: false,
     showImg: null
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.tagImg !== this.state.tagImg) {
-      this.setState({page: 2, status: 'pending'})
-      fetchImgs(this.state.tagImg, 1)
+    if (prevState.tagImg !== this.state.tagImg || prevState.page !== this.state.page) {
+      this.setState({status: 'pending'})
+      fetchImgs(this.state.tagImg, this.state.page)
       .then(imgs => this.setState(prevState => {
         if (!imgs.total) {
-          return {imgs: null, status: 'absent'}
+          // При відсутності зображень зображень з запиту пошуку
+          return {imgs: [], status: 'absent'} 
         }
-        if (Math.ceil(imgs.totalHits / 12) === 1) {
-          return {imgs: imgs.hits, status: 'end'}
+        if (Math.ceil(imgs.totalHits / 12) === this.state.page) {
+          return {imgs: [...prevState.imgs, ...imgs.hits], status: 'end'}
         }
-        return {imgs: imgs.hits, responseApi: imgs, status: 'resolved'}}))
+        return {imgs: [...prevState.imgs, ...imgs.hits], status: 'resolved'}}))
       .catch(error => this.setState({error, status: 'rejected'}))
     }
   }
 
   loadMore = () => {
-    this.setState(({page}) => {return {page: page+1, status: 'pending'}})
-    fetchImgs(this.state.tagImg, this.state.page)
-      .then(imgs => this.setState(prevState => {
-        if (Math.ceil(this.state.responseApi.totalHits / 8) === this.state.page) {
-          return {imgs: [...prevState.imgs, ...imgs.hits], status: 'end'}
-        }
-        return {imgs: [...prevState.imgs, ...imgs.hits], status: 'resolved'}
-      }))
+    this.setState(({page}) => {return {page: page+1}})
   }
 
   toggleModal = () => {
@@ -53,7 +47,10 @@ export class App extends Component {
   }
 
   handelFormSubmit = (tagImg) => {
-    this.setState({tagImg: tagImg})
+    if (tagImg === this.state.tagImg) {
+      return toast.error('Це ми вже знайшли 🙃')
+    }
+    this.setState({tagImg: tagImg, page: 1, imgs: []})
   }
 
   openModal = (img) => {
@@ -75,10 +72,10 @@ export class App extends Component {
         {imgs && <ImageGallery imgs ={imgs} onOpenModal={this.openModal}/>}
         {showModal && <Modal img = {showImg} onClose = {this.closeModal}/>}
         {status === 'pending' && <Loader />}
-        {status === 'end' && <h3>Це всі зображення, що знайшли 🙃</h3>}
         {status === 'resolved' && <Button onClick={this.loadMore}/>}
-        {status === 'absent' && <h3>No results found for {tagImg}.</h3>}
-        {status === 'rejected' && <h3>ERROR</h3>}
+        {status === 'end' && <Message><h2>Це всі зображення, що знайшли 🙃</h2></Message>}
+        {status === 'absent' && <Message><h2>No results found for "{tagImg}".</h2></Message>}
+        {status === 'rejected' && <Message><h2>ERROR</h2></Message>}
         
         <Toaster position="bottom-center"/>
       </>
