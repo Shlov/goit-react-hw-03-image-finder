@@ -85,3 +85,5 @@ export class App extends Component {
     );
   }
 };
+
+// 'resolved' 'pendingMore' 'idel' 'pendingMore' 'end'

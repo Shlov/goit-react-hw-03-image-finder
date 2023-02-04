@@ -1,10 +1,5 @@
-
-import { Component } from "react"
 import { ImageGalleryItem } from "components/ImageGalleryItem/ImageGalleryItem"
-
 import { ImageGalleryEl } from './ImageGallery.styled'
-
-import { Loader } from "components/Loader/Loader"
 
 
 export const ImageGallery = ({imgs, onOpenModal}) => {
@@ -18,4 +13,4 @@ export const ImageGallery = ({imgs, onOpenModal}) => {
   )
 }
 
-// 'resolved' 'pendingMore' 'idel' 'pendingMore' 'end'
+
