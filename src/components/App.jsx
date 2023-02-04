@@ -6,7 +6,7 @@ import { ImageGallery } from "./ImageGallery/ImageGallery";
 import { Modal } from "./Modal/Modal";
 import { Searchbar } from "./Searchbar/Searchbar"
 import { fetchImgs } from "js/fetchSearch"
-import toast from 'react-hot-toast';
+// import toast from 'react-hot-toast';
 
 export class App extends Component {
   state = {
